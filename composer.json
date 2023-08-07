@@ -1,0 +1,31 @@
+{
+  "name": "geniza-ai/geniza-sdk-php",
+  "description": "SDK for interacting with Geniza.AI endpoints",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Tim Swagger",
+      "email": "tim@geniza.ai",
+      "role": "Developer"
+    }
+  ],
+  "keywords": [
+    "Geniza",
+    "Geniza.ai",
+    "LLM",
+    "Artificial Inteligence"
+  ],
+  "require": {
+    "php": "^8.1",
+    "ext-json": "*",
+    "guzzlehttp/guzzle": "^7.7.0"
+  },
+  "suggest": {
+    "ext-curl": "Helpful in interacting with Geniza.ai API servers.",
+    "ext-openssl": "Always a good idea"
+  },
+  "support": {
+    "source": "https://github.com/geniza-ai/geniza-sdk-php",
+    "issues": "https://github.com/geniza-ai/geniza-sdk-php/issues"
+  }
+}
