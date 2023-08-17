@@ -1,6 +1,6 @@
 {
   "name": "geniza-ai/geniza-sdk-php",
-  "description": "SDK for interacting with Geniza.AI endpoints",
+  "description": "SDK for interacting with Geniza.ai API endpoints",
   "license": "MIT",
   "authors": [
     {
@@ -23,6 +23,11 @@
   "suggest": {
     "ext-curl": "Helpful in interacting with Geniza.ai API servers.",
     "ext-openssl": "Always a good idea"
+  },
+  "autoload": {
+    "psr-4": {
+      "Geniza\\": "src"
+    },
   },
   "support": {
     "source": "https://github.com/geniza-ai/geniza-sdk-php",
