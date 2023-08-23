@@ -51,12 +51,13 @@ class Client {
 				'Content-Type' => 'application/json',
 			],
 			'body' => $body,
+			'verify' => false // TODO: remove this line
 		];
 
 		try {
 			$response = $client->send($request, $requestConfig);
 		} catch (GuzzleException $e) {
-			throw new ResponseException($e->getMessage(), $e->getCode(), $e->getFile());
+			throw new ResponseException($e->getMessage(), $e->getCode(), $e->getTraceAsString());
 		}
 
 		if($response->getStatusCode() != 200) {
@@ -74,11 +75,11 @@ class Client {
 	/**
 	 * Generate final body value
 	 *
-	 * @param ?array $fromPayload Payload as an array
+	 * @param ?Payload $fromPayload Payload
 	 * @return string JSON string
 	 * @throws JsonException
 	 */
-	private function getBody(?array $fromPayload = null): string {
+	private function getBody(?Payload $fromPayload = null): string {
 		// if payload is null just return an empty string
 		if(! isset($fromPayload)) {
 			return '';

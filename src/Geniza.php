@@ -3,6 +3,10 @@ namespace Geniza;
 
 use Geniza\Config\Access;
 use Geniza\Config\Config;
+use Geniza\Request\Client;
+use Geniza\Request\Method;
+use Geniza\Request\Payload;
+use Geniza\Request\Url;
 
 /**
  * Geniza.ai PHP SKD
@@ -38,5 +42,26 @@ class Geniza {
 		if($sandBoxMode) {
 			$this->config->setAsSandbox();
 		}
+	}
+
+	/**
+	 * the Sapient Squirrel
+	 *
+	 * @param string $question The question you would like to ask the Sapient Squirrel
+	 * @return string The response from the Sapient Squirrel
+	 */
+	public function askSapientSquirrel(string $question): string {
+
+		$requestClient = new Client();
+		$url = new Url('sapientSquirrel', Method::POST);
+		$payload = new Payload(['question' => $question]);
+
+		try {
+			$response = $requestClient->request($url, $payload);
+		} catch (Request\ResponseException | \JsonException | \Exception $e) {
+			return 'Error: ' . $e->getCode() . '; ' . $e->getMessage() . ";\n\n" . $e->responsePayload;
+		}
+
+		return $response->answer;
 	}
 }

@@ -1,6 +1,8 @@
 <?php
 namespace Geniza\Request;
 
+use JsonSerializable;
+
 /**
  * Class Request Payload
  *
@@ -9,7 +11,7 @@ namespace Geniza\Request;
  * @author Tim Swagger <tim@geniza.ai>
  * @since 0.1.0
  */
-class Payload {
+class Payload implements JsonSerializable {
 
 	/**
 	 * Properties
@@ -60,11 +62,11 @@ class Payload {
 	}
 
 	/**
-	 * Serialize object
+	 * JSON Serialize object
 	 *
 	 * @return array
 	 */
-	public function __serialize(): array {
+	public function jsonSerialize(): mixed {
 		return $this->properties;
 	}
 }
