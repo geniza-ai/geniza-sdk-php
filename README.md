@@ -1,8 +1,8 @@
-Geniza PHP SKD
+Geniza PHP SDK
 =========================
 
 [![Php_version](https://img.shields.io/packagist/php-v/geniza-ai/geniza-sdk-php?logo=php&logoColor=ffffff)](https://packagist.org/packages/datadistillr/drill-sdk-php)
-[![Package version](https://img.shields.io/packagist/v/geniza-ai/geniza-sdk-php?include_prereleases&logo=packagist&logoColor=ffffff)](https://packagist.org/packages/datadistillr/drill-sdk-php)
+[![Package version](https://img.shields.io/packagist/v/geniza-ai/geniza-sdk-php?include_prereleases&logo=packagist&logoColor=ffffff)](https://packagist.org/packages/geniza-ai/geniza-sdk-php)
 [![License](https://img.shields.io/packagist/l/geniza-ai/geniza-sdk-php?logo=MIT&logoColor=ffffff)](LICENSE)
 
 
