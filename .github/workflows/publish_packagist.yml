@@ -1,0 +1,17 @@
+name: Publish to Packagist
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  github:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish
+      - uses: mnavarrocarter/packagist-update@v1.0
+      - with:
+          username: "geniza.ai"
+          api_token: ${{ secrets.packagist_token }}
+          package_name: geniza-ai/geniza-sdk-php
+          domain: "packagist.org"
