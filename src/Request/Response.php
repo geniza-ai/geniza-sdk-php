@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Geniza\Request;
 
 /**
@@ -7,14 +7,13 @@ namespace Geniza\Request;
  *
  * This is the base class for handling all curl responses
  *
- * @author Tim Swagger <tim@geniza.ai>
  * @since 0.1.0
  */
 class Response {
-
 	/**
 	 * Properties
-	 * @var string[] $properties
+	 *
+	 * @var string[]
 	 */
 	private array $properties = [];
 
@@ -24,9 +23,9 @@ class Response {
 	 * @param ?object $responseObject Base Object
 	 */
 	public function __construct(?object $responseObject = null) {
-		if(isset($responseObject)) {
+		if (isset($responseObject)) {
 			foreach ($responseObject as $key => $value) {
-				$this->$key = $value;
+				$this->{$key} = $value;
 			}
 		}
 	}
@@ -34,9 +33,8 @@ class Response {
 	/**
 	 * Set Properties
 	 *
-	 * @param string $name Property name
-	 * @param mixed $value Property value
-	 * @return void
+	 * @param string $name  Property name
+	 * @param mixed  $value Property value
 	 */
 	public function __set(string $name, mixed $value): void {
 		$this->properties[$name] = $value;
@@ -46,6 +44,7 @@ class Response {
 	 * Get Properties
 	 *
 	 * @param string $name Property Name
+	 *
 	 * @return mixed Property Value
 	 */
 	public function __get(string $name): mixed {
@@ -54,8 +53,6 @@ class Response {
 
 	/**
 	 * Serialize object
-	 *
-	 * @return array
 	 */
 	public function __serialize(): array {
 		return $this->properties;

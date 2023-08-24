@@ -21,7 +21,10 @@
     "guzzlehttp/guzzle": "^7.7.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^10.3.2"
+    "phpunit/phpunit": "^10.3.2",
+    "friendsofphp/php-cs-fixer": "^v3.23.0",
+    "nexusphp/cs-config": "^v3.14.4",
+    "roave/security-advisories": "dev-latest"
   },
   "suggest": {
     "ext-curl": "Helpful in interacting with Geniza.ai API servers.",
@@ -34,8 +37,35 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Tests\\Support\\": "tests/_support"
+      "Tests\\Support\\": "tests/_support",
+      "CodingStandard\\": "CodingStandard"
     }
+  },
+  "scripts": {
+    "post-update-cmd": [
+      "bash admin/setup.sh"
+    ],
+    "analyze": [
+      "phpstan analyze",
+      "psalm",
+      "rector process --dry-run"
+    ],
+    "sa": "@analyze",
+    "ci": [
+      "Composer\\Config::disableProcessTimeout",
+      "@cs",
+      "@deduplicate",
+      "@inspect",
+      "@analyze",
+      "@test"
+    ],
+    "cs": "php-cs-fixer fix --ansi --verbose --dry-run --diff",
+    "cs-fix": "php-cs-fixer fix --ansi --verbose --diff",
+    "deduplicate": "phpcpd app/ src/",
+    "inspect": "deptrac analyze --cache-file=build/deptrac.cache",
+    "mutate": "infection --threads=2 --skip-initial-tests --coverage=build/phpunit",
+    "style": "@cs-fix",
+    "test": "phpunit"
   },
   "support": {
     "source": "https://github.com/geniza-ai/geniza-sdk-php",

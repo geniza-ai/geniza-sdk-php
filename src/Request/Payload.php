@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Geniza\Request;
 
 use JsonSerializable;
@@ -8,25 +9,23 @@ use JsonSerializable;
  *
  * This class is the base class for all HTTP request bodies.
  *
- * @author Tim Swagger <tim@geniza.ai>
  * @since 0.1.0
  */
 class Payload implements JsonSerializable {
-
 	/**
 	 * Properties
-	 * @var string[] $properties
+	 *
+	 * @var string[]
 	 */
 	private array $properties = [];
 
 	/**
 	 * Constructor
 	 *
-	 * @param ?object|array $data Data Object
+	 * @param array|?object $data Data Object
 	 */
 	public function __construct($data) {
-
-		foreach($data as $key=>$value) {
+		foreach ($data as $key => $value) {
 			$this->__set($key, $value);
 		}
 	}
@@ -43,9 +42,8 @@ class Payload implements JsonSerializable {
 	/**
 	 * Set Properties
 	 *
-	 * @param string $name Property name
-	 * @param mixed $value Property value
-	 * @return void
+	 * @param string $name  Property name
+	 * @param mixed  $value Property value
 	 */
 	public function __set(string $name, mixed $value): void {
 		$this->properties[$name] = $value;
@@ -55,6 +53,7 @@ class Payload implements JsonSerializable {
 	 * Get Properties
 	 *
 	 * @param string $name Property Name
+	 *
 	 * @return mixed Property Value
 	 */
 	public function __get(string $name): mixed {
