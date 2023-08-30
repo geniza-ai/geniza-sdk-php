@@ -9,6 +9,11 @@ namespace Geniza\Config;
  */
 class Config extends BaseConfig {
 	/**
+	 * SDK Version number
+	 */
+	public string $version = '0.1.2';
+
+	/**
 	 * Sandbox Base URI
 	 */
 	private string $sbBaseURI = 'https://sandbox.geniza.ai/';

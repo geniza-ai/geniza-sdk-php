@@ -31,15 +31,17 @@ class Client {
 	 * @throws ResponseException
 	 */
 	public function request(Url $url, ?Payload $payload = null, ?array $additionalHeaders = []): ?Response {
+		$client = new \GuzzleHttp\Client();
+
 		/** @var Config $config */
 		$config = Config::getInstance();
 
 		/** @var Access $access */
 		$access = Access::getInstance();
 
-		$client = new \GuzzleHttp\Client();
-
 		$body = $this->getBody($payload);
+
+		$phpVersion = PHP_VERSION;
 
 		$request       = new Request($url->method->value, $url->url);
 		$requestConfig = [
@@ -48,6 +50,7 @@ class Client {
 				'Accept'        => 'application/json',
 				'Authorization' => 'HMAC-SHA256 ' . $access->key . ':' . $this->getHMACHash($access->secretKey, $body),
 				'Content-Type'  => 'application/json',
+				'User-Agent'    => "Geniza.ai-SDK-PHP/{$config->version}, PHP/{$phpVersion}",
 			],
 			'body'   => $body,
 			'verify' => false, // TODO: remove this line
@@ -63,7 +66,7 @@ class Client {
 			throw new ResponseException('Request Error', $response->getStatusCode(), $response->getBody());
 		}
 
-		$result = json_decode($response->getBody());
+		$result = json_decode((string) $response->getBody());
 		if (! isset($result)) {
 			return null;
 		}

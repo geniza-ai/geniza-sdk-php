@@ -24,8 +24,10 @@ final class ConnectionTest extends TestCase {
 	public function testSapientSquirrel(): void {
 		$response = $this->geniza->askSapientSquirrel('Will I go to the ball this evening?');
 
-		$this->assertIsString($response);
-		$this->assertStringStartsNotWith('Error:', $response, $response);
-		echo "Response: {$response}";
+		$this->assertIsString($response->answer);
+		$this->assertSame(45, strlen($response->uuid), $response->uuid);
+		$this->assertIsString($response->version);
+
+		$this->assertStringStartsNotWith('Error:', $response->answer, $response->answer);
 	}
 }

@@ -8,6 +8,7 @@ use Geniza\Config\Config;
 use Geniza\Request\Client;
 use Geniza\Request\Method;
 use Geniza\Request\Payload;
+use Geniza\Request\Response;
 use Geniza\Request\Url;
 use JsonException;
 
@@ -50,7 +51,7 @@ class Geniza {
 	 *
 	 * @return string The response from the Sapient Squirrel
 	 */
-	public function askSapientSquirrel(string $question): string {
+	public function askSapientSquirrel(string $question): Response {
 		$requestClient = new Client();
 		$url           = new Url('sapientSquirrel', Method::POST);
 		$payload       = new Payload(['question' => $question]);
@@ -61,6 +62,6 @@ class Geniza {
 			return 'Error: ' . $e->getCode() . '; ' . $e->getMessage() . ";\n\n" . $e->responsePayload;
 		}
 
-		return $response->answer;
+		return $response;
 	}
 }
