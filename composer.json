@@ -28,7 +28,9 @@
     "phpstan/phpstan": "*",
     "phpstan/extension-installer": "*",
     "phpstan/phpstan-strict-rules": "*",
-    "sebastian/phpcpd": "*"
+    "sebastian/phpcpd": "*",
+    "vimeo/psalm": "*",
+    "rector/rector": "0.18.3"
   },
   "suggest": {
     "ext-curl": "Helpful in interacting with Geniza.ai API servers.",

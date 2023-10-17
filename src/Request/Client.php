@@ -24,8 +24,6 @@ class Client {
 	 * @param ?Payload $payload           Object [default: null]
 	 * @param ?array   $additionalHeaders Additional headers as an associative array [default: []]
 	 *
-	 * @return ?Response
-	 *
 	 * @throws Exception
 	 * @throws JsonException
 	 * @throws ResponseException
@@ -63,7 +61,7 @@ class Client {
 		}
 
 		if ($response->getStatusCode() !== 200) {
-			throw new ResponseException('Request Error', $response->getStatusCode(), $response->getBody());
+			throw new ResponseException('Request Error', $response->getStatusCode(), (string) $response->getBody());
 		}
 
 		$result = json_decode((string) $response->getBody());

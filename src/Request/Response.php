@@ -2,6 +2,8 @@
 declare(strict_types=1);
 namespace Geniza\Request;
 
+use AllowDynamicProperties;
+
 /**
  * HTTP Response Class
  *
@@ -9,11 +11,12 @@ namespace Geniza\Request;
  *
  * @since 0.1.0
  */
+#[AllowDynamicProperties]
 class Response {
 	/**
 	 * Properties
 	 *
-	 * @var string[]
+	 * @var array<string, mixed>
 	 */
 	private array $properties = [];
 

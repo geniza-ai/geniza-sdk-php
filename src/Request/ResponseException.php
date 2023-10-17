@@ -15,15 +15,11 @@ use Throwable;
 class ResponseException extends Exception {
 	/**
 	 * Response Payload
-	 *
-	 * @var ?string
 	 */
 	public ?string $responsePayload;
 
 	/**
 	 * Constructor
-	 *
-	 * @param ?string $responsePayload
 	 */
 	public function __construct(string $message, int $code, ?string $responsePayload = null, ?Throwable $previous = null) {
 		$this->responsePayload = $responsePayload;
