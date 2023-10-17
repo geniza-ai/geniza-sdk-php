@@ -4,6 +4,7 @@ namespace Geniza\Geniza\Test;
 
 use Geniza\Geniza;
 use PHPUnit\Framework\TestCase;
+use ValueError;
 
 /**
  * @internal
@@ -29,5 +30,15 @@ final class ConnectionTest extends TestCase {
 		$this->assertIsString($response->version);
 
 		$this->assertStringStartsNotWith('Error:', $response->answer, $response->answer);
+
+		$feedbackResponse = $this->geniza->provideFeedback($response->uuid, 0.9, 'This is test feedback');
+		$this->assertTrue($feedbackResponse);
+
+		try {
+			$this->geniza->provideFeedback($response->uuid, 2.4, 'This is bad feedback');
+			$this->fail('False Positive on feedback response');
+		} catch (ValueError) {
+			$this->assertTrue(true);
+		}
 	}
 }
