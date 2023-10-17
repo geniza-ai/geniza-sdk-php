@@ -11,6 +11,7 @@ use Geniza\Request\Payload;
 use Geniza\Request\Response;
 use Geniza\Request\Url;
 use JsonException;
+use ValueError;
 
 /**
  * Geniza.ai PHP SKD
@@ -63,5 +64,32 @@ class Geniza {
 		}
 
 		return $response;
+	}
+
+	/**
+	 * Provide feedback on Geniza.ai Response
+	 *
+	 * @param string  $uuid               Unique Request ID
+	 * @param float   $rating             Rating on feedback 0.0 (poor) to 1.0 (good) [default: 0]
+	 * @param ?string $additionalFeedback additional feedback you wish to provide us with [default: null]
+	 */
+	public function provideFeedback(string $uuid, float $rating = 1.0, ?string $additionalFeedback = null): bool {
+		if ($rating < 0.0 || $rating > 1.0) {
+			throw new ValueError('Rating must be between 0.0 and 1.0.');
+		}
+
+		$requestClient = new Client();
+		$url           = new Url('feedback', Method::POST);
+		$payload       = new Payload([
+			'uuid'     => $uuid,
+			'rating'   => $rating,
+			'feedback' => $additionalFeedback,
+		]);
+
+		try {
+			return (bool) $requestClient->request($url, $payload);
+		} catch (Request\ResponseException|JsonException|Exception $e) {
+			return false;
+		}
 	}
 }

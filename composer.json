@@ -24,7 +24,11 @@
     "phpunit/phpunit": "^10.3.2",
     "friendsofphp/php-cs-fixer": "^v3.23.0",
     "nexusphp/cs-config": "^v3.14.4",
-    "roave/security-advisories": "dev-latest"
+    "roave/security-advisories": "dev-latest",
+    "phpstan/phpstan": "*",
+    "phpstan/extension-installer": "*",
+    "phpstan/phpstan-strict-rules": "*",
+    "sebastian/phpcpd": "*"
   },
   "suggest": {
     "ext-curl": "Helpful in interacting with Geniza.ai API servers.",
@@ -70,5 +74,10 @@
   "support": {
     "source": "https://github.com/geniza-ai/geniza-sdk-php",
     "issues": "https://github.com/geniza-ai/geniza-sdk-php/issues"
+  },
+  "config": {
+    "allow-plugins": {
+      "phpstan/extension-installer": true
+    }
   }
 }
