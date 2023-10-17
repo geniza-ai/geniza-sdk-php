@@ -9,6 +9,9 @@ use Geniza\Config\Config;
  *
  * This class holds the URL and the request type
  *
+ * @property Method $method
+ * @property string $url
+ *
  * @since 0.1.0
  */
 class Url {

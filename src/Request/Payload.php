@@ -22,7 +22,7 @@ class Payload implements JsonSerializable {
 	/**
 	 * Constructor
 	 *
-	 * @param array|?object $data Data Object
+	 * @param array|object|null $data Data Object
 	 */
 	public function __construct($data) {
 		foreach ($data as $key => $value) {

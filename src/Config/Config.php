@@ -37,7 +37,6 @@ class Config extends BaseConfig {
 	 * Constructor method for the config class
 	 */
 	protected function __construct() {
-		parent::__construct();
 		$this->baseURI = $this->prodBaseURI . $this->basePath;
 	}
 

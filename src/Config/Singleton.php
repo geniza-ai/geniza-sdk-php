@@ -24,8 +24,7 @@ abstract class Singleton {
 	 *
 	 * This is allowed to be overridden in subclasses in order for
 	 */
-	protected function __construct() {
-	}
+	abstract protected function __construct();
 
 	/**
 	 * Remove access to __clone() method
@@ -50,7 +49,7 @@ abstract class Singleton {
 	 *
 	 * While this can be overridden, it should be done ONLY in a rare exception.
 	 */
-	public static function getInstance(): Singleton {
+	public static function getInstance(): mixed {
 		$class = static::class;
 		if (! isset(static::$instances[$class])) {
 			static::$instances[$class] = new static();

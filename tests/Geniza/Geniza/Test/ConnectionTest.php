@@ -18,7 +18,7 @@ final class ConnectionTest extends TestCase {
 	/**
 	 * Setup test case
 	 */
-	protected function setup(): void {
+	protected function setUp(): void {
 		$this->geniza = new Geniza('a6c460e1c1d73e08915c151b4cabbe8e', '565c05c85232f0e5132c8b5015476cdd', true);
 	}
 
@@ -26,7 +26,7 @@ final class ConnectionTest extends TestCase {
 		$response = $this->geniza->askSapientSquirrel('Will I go to the ball this evening?');
 
 		$this->assertIsString($response->answer);
-		$this->assertSame(45, strlen($response->uuid), $response->uuid);
+		$this->assertSame(45, strlen((string) $response->uuid), $response->uuid);
 		$this->assertIsString($response->version);
 
 		$this->assertStringStartsNotWith('Error:', $response->answer, $response->answer);

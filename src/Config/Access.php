@@ -17,4 +17,10 @@ class Access extends BaseConfig {
 	 * API Secret Key
 	 */
 	public string $secretKey;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+	}
 }

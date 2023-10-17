@@ -9,6 +9,7 @@ use Geniza\Request\Client;
 use Geniza\Request\Method;
 use Geniza\Request\Payload;
 use Geniza\Request\Response;
+use Geniza\Request\ResponseException;
 use Geniza\Request\Url;
 use JsonException;
 use ValueError;
@@ -38,7 +39,6 @@ class Geniza {
 		$access->key       = $key;
 		$access->secretKey = $secretKey;
 
-		/** @var Config $this->config */
 		$this->config = Config::getInstance();
 		if ($sandBoxMode) {
 			$this->config->setAsSandbox();
@@ -50,7 +50,9 @@ class Geniza {
 	 *
 	 * @param string $question The question you would like to ask the Sapient Squirrel
 	 *
-	 * @return string The response from the Sapient Squirrel
+	 * @return Response The response from the Sapient Squirrel
+	 *
+	 * @throws ResponseException
 	 */
 	public function askSapientSquirrel(string $question): Response {
 		$requestClient = new Client();
@@ -59,8 +61,8 @@ class Geniza {
 
 		try {
 			$response = $requestClient->request($url, $payload);
-		} catch (Request\ResponseException|JsonException|Exception $e) {
-			return 'Error: ' . $e->getCode() . '; ' . $e->getMessage() . ";\n\n" . $e->responsePayload;
+		} catch (ResponseException|JsonException|Exception $e) {
+			throw new ResponseException('Error: ' . $e->getMessage(), $e->getCode(), $e->responsePayload ?? null);
 		}
 
 		return $response;
@@ -88,7 +90,7 @@ class Geniza {
 
 		try {
 			return (bool) $requestClient->request($url, $payload);
-		} catch (Request\ResponseException|JsonException|Exception $e) {
+		} catch (ResponseException|JsonException|Exception) {
 			return false;
 		}
 	}
