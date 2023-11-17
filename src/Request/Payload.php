@@ -36,7 +36,7 @@ class Payload implements JsonSerializable {
 	 * @return string JSON Encoded Object
 	 */
 	public function encode(): string {
-		return json_encode($this, JSON_UNESCAPED_SLASHES);
+		return json_encode($this, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 	}
 
 	/**

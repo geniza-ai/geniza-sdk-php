@@ -69,6 +69,29 @@ class Geniza {
 	}
 
 	/**
+	 * Stock Symbol Extractor
+	 *
+	 * @param string $text Text block containing Company names/references
+	 *
+	 * @return Response A Response object containing a list of company names and their stock symbols
+	 *
+	 * @throws ResponseException
+	 */
+	public function extractStockSymbols(string $text): Response {
+		$requestClient = new Client();
+		$url           = new Url('extractors/stockSymbols', Method::POST);
+		$payload       = new Payload(['text' => $text]);
+
+		try {
+			$response = $requestClient->request($url, $payload);
+		} catch (ResponseException|JsonException|Exception $e) {
+			throw new ResponseException('Error: ' . $e->getMessage(), $e->getCode(), $e->responsePayload ?? null);
+		}
+
+		return $response;
+	}
+
+	/**
 	 * Provide feedback on Geniza.ai Response
 	 *
 	 * @param string  $uuid               Unique Request ID
