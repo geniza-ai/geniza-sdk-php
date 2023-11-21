@@ -5,6 +5,7 @@ namespace Geniza\Request;
 use Exception;
 use Geniza\Config\Access;
 use Geniza\Config\Config;
+use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 use JsonException;
@@ -29,7 +30,9 @@ class Client {
 	 * @throws ResponseException
 	 */
 	public function request(Url $url, ?Payload $payload = null, ?array $additionalHeaders = []): ?Response {
-		$client = new \GuzzleHttp\Client();
+		/** @var RequestHandler $requestHandler */
+		$requestHandler = RequestHandler::getInstance();
+		$client         = new GuzzleClient($requestHandler->guzzleOptions());
 
 		/** @var Config $config */
 		$config = Config::getInstance();
@@ -60,7 +63,7 @@ class Client {
 			throw new ResponseException($e->getMessage(), $e->getCode(), $e->getTraceAsString());
 		}
 
-		if ($response->getStatusCode() !== 200) {
+		if ($response->getStatusCode() < 200 || $response->getStatusCode() >= 300) {
 			throw new ResponseException('Request Error', $response->getStatusCode(), (string) $response->getBody());
 		}
 
@@ -87,7 +90,7 @@ class Client {
 			return '';
 		}
 
-		return json_encode($fromPayload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
+		return json_encode($fromPayload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 	}
 
 	/**

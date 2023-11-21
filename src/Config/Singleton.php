@@ -49,10 +49,10 @@ abstract class Singleton {
 	 *
 	 * While this can be overridden, it should be done ONLY in a rare exception.
 	 */
-	public static function getInstance(): mixed {
+	public static function getInstance(...$options): mixed {
 		$class = static::class;
 		if (! isset(static::$instances[$class])) {
-			static::$instances[$class] = new static();
+			static::$instances[$class] = new static(...$options);
 		}
 
 		return static::$instances[$class];

@@ -4,5 +4,6 @@ composer.lock
 /vendor
 /coverage.xml
 /docs
+/build
 .phpunit.result.cache
 .DS_Store
