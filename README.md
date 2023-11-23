@@ -25,6 +25,9 @@ use Geniza\Geniza;
 
 new Geniza($key, $secretKey);
 ```
+
+Detailed information on how to use the methods contained in this SDK can be found on in our [API documentation](https://docs.geniza.ai).
+
 ## Framework Integrations
 
 ### CodeIgniter 4
