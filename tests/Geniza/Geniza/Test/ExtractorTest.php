@@ -9,7 +9,7 @@ use Tests\Support\BaseTestCase;
 /**
  * @internal
  */
-final class ExtractorStockSymbolsTest extends BaseTestCase {
+final class ExtractorTest extends BaseTestCase {
 	/**
 	 * Setup test case
 	 */
@@ -18,7 +18,7 @@ final class ExtractorStockSymbolsTest extends BaseTestCase {
 	}
 
 	/**
-	 * Test Sapient Squirrel and feedback Methods
+	 * Test Stock Symbol Extractor
 	 */
 	public function testStockSymbolExtraction(): void {
 		$this->mock->reset();

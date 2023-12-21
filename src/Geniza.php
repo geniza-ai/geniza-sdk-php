@@ -92,6 +92,52 @@ class Geniza {
 	}
 
 	/**
+	 * Language Detector
+	 *
+	 * @param string $text Text block which needs the written language identified.
+	 *
+	 * @return Response A Response object containing information on the language
+	 *
+	 * @throws ResponseException
+	 */
+	public function detectLanguage(string $text): Response {
+		$requestClient = new Client();
+		$url           = new Url('detectors/language', Method::POST);
+		$payload       = new Payload(['text' => $text]);
+
+		try {
+			$response = $requestClient->request($url, $payload);
+		} catch (ResponseException|JsonException|Exception $e) {
+			throw new ResponseException('Error: ' . $e->getMessage(), $e->getCode(), $e->responsePayload ?? null);
+		}
+
+		return $response;
+	}
+
+	/**
+	 * PII Detector
+	 *
+	 * @param string $text Text block containing information that may contain PII
+	 *
+	 * @return Response A Response object containing a list identified PII
+	 *
+	 * @throws ResponseException
+	 */
+	public function detectPii(string $text): Response {
+		$requestClient = new Client();
+		$url           = new Url('detectors/pii', Method::POST);
+		$payload       = new Payload(['text' => $text]);
+
+		try {
+			$response = $requestClient->request($url, $payload);
+		} catch (ResponseException|JsonException|Exception $e) {
+			throw new ResponseException('Error: ' . $e->getMessage(), $e->getCode(), $e->responsePayload ?? null);
+		}
+
+		return $response;
+	}
+
+	/**
 	 * Provide feedback on Geniza.ai Response
 	 *
 	 * @param string  $uuid               Unique Request ID

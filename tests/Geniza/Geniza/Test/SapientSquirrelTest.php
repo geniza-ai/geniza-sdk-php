@@ -57,11 +57,11 @@ final class SapientSquirrelTest extends BaseTestCase {
 		}
 
 		// Check request structure
-//		$this->assertSame(3, $this->rh->historyCount());
+//		$this->assertSame(2, $this->rh->historyCount());
 
 		$requestHistory = $this->rh->getRequestHistoryBodies();
 
 		$this->assertSame('{"question":"Will I go to the ball this evening?"}', $requestHistory[0]);
-		$this->assertSame('{"uuid":"12S3A67-901g346U789-12J346ER9012-46L78901H345","rating":0.9,"feedback":"This is test feedback"}', $requestHistory[1]);
+		$this->assertSame('{"uuid":"80fd58c78e782a7f950e10a713105e026557ea44d54fe","rating":0.9,"feedback":"This is test feedback"}', $requestHistory[1]);
 	}
 }
