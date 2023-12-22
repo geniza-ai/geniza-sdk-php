@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace Geniza\Request;
 
+use Geniza\Config\Config;
 use JsonSerializable;
 
 /**
@@ -66,6 +67,14 @@ class Payload implements JsonSerializable {
 	 * @return array
 	 */
 	public function jsonSerialize(): mixed {
+		if (! isset($this->properties['sandbox'])) {
+			/** @var Config $config */
+			$config = Config::getInstance();
+
+			/** @psalm-readonly $config->isSandbox */
+			$this->properties['sandbox'] = $config->isSandbox;
+		}
+
 		return $this->properties;
 	}
 }
