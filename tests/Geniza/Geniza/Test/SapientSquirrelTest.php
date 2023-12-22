@@ -39,6 +39,11 @@ final class SapientSquirrelTest extends BaseTestCase {
 			$this->fail('Request Failed');
 		}
 
+		$request     = $this->mock->getLastRequest();
+		$requestBody = json_decode((string) $request->getBody());
+
+		$this->assertTrue($requestBody->sandbox);
+
 		$this->assertIsString($response->answer);
 		$this->assertSame(45, strlen((string) $response->uuid), $response->uuid);
 		$this->assertIsString($response->version);
@@ -61,7 +66,7 @@ final class SapientSquirrelTest extends BaseTestCase {
 
 		$requestHistory = $this->rh->getRequestHistoryBodies();
 
-		$this->assertSame('{"question":"Will I go to the ball this evening?"}', $requestHistory[0]);
-		$this->assertSame('{"uuid":"80fd58c78e782a7f950e10a713105e026557ea44d54fe","rating":0.9,"feedback":"This is test feedback"}', $requestHistory[1]);
+		$this->assertSame('{"question":"Will I go to the ball this evening?","sandbox":true}', $requestHistory[0]);
+		$this->assertSame('{"uuid":"80fd58c78e782a7f950e10a713105e026557ea44d54fe","rating":0.9,"feedback":"This is test feedback","sandbox":true}', $requestHistory[1]);
 	}
 }
