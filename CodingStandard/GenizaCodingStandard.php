@@ -407,10 +407,8 @@ final class GenizaCodingStandard extends AbstractRuleset {
 			'phpdoc_no_access'    => true,
 			'phpdoc_no_alias_tag' => [
 				'replacements' => [
-					'property-read'  => 'property',
-					'property-write' => 'property',
-					'type'           => 'var',
-					'link'           => 'see',
+					'type' => 'var',
+					'link' => 'see',
 				],
 			],
 			'phpdoc_no_empty_return'       => false,

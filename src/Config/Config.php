@@ -7,7 +7,7 @@ namespace Geniza\Config;
  *
  * @since V0.1.0
  *
- * @property bool $isSandbox;
+ * @property-read bool $isSandbox;
  */
 class Config extends BaseConfig {
 	/**
