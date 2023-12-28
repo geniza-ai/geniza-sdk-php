@@ -137,10 +137,27 @@ class Geniza {
 		return $response;
 	}
 
-	public function analyzeProductFeedback(string $text): Response {
+	/**
+	 * Product Feedback analyzer
+	 *
+	 * Analyzes product feedback to determine if the feedback is positive, negative, or neutral in nature.
+	 *
+	 * @param string  $feedBack Text block containing the feedback
+	 * @param ?string $title    Optional text block containing the feedback title
+	 *
+	 * @return Response A Response object containing a classification and a confidence level.
+	 *
+	 * @throws ResponseException
+	 */
+	public function analyzeProductFeedback(string $feedBack, ?string $title = null): Response {
 		$requestClient = new Client();
 		$url           = new Url('analyzers/ProductFeedback', Method::POST);
-		$payload       = new Payload(['text' => $text]);
+
+		if ($title !== null) {
+			$feedBack = 'Title: ' . $title . "\n\n" . $feedBack;
+		}
+
+		$payload = new Payload(['feedback' => $feedBack]);
 
 		try {
 			$response = $requestClient->request($url, $payload);

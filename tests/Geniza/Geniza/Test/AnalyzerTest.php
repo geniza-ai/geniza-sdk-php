@@ -21,16 +21,18 @@ final class AnalyzerTest extends BaseTestCase {
 	 * Test Language Detector
 	 */
 	public function testProductFeedbackAnalyzer(): void {
+		$historyCount = $this->rh->historyCount();
 		$this->mock->reset();
 		$this->mock->append(
-			new Response(201, ['Content-Type' => 'application/json'], '{"env":"testing","version":"0.1.2","messages":null,"uuid":"80fd58c78e782a7f950e10a713105e026557ea44d54fe","language":{"code":"en", "name":"English", "localName":"English"}}')
+			new Response(201, ['Content-Type' => 'application/json'], '{"env":"testing","version":"0.1.2","messages":null,"uuid":"80fd58c78e782a7f950e10a713105e026557ea44d54fe","feedback":{"classification":"neutral", "confidence":73}}'),
+			new Response(201, ['Content-Type' => 'application/json'], '{"env":"testing","version":"0.1.2","messages":null,"uuid":"80fd58c78e782a7f945e10a713105e026557ea44d54fe","feedback":{"classification":"positive", "confidence":61}}')
 		);
 
 		// Main request
-		$textBlock = "Big Tech on Trial reporter Lee Hepner—who also serves as antitrust legal counsel for the nonprofit the American Economic Liberties Project—posted on X (formerly Twitter) to summarize Murphy's testimony as arguing, \"Google's Search monopoly is good for you, consumer choice is 'irrational,' and privacy is bad quality.\"\nOn the day prior, Murphy potentially bolstered the DOJ's case by accidentally leaking a key figure that both Google and Apple had specifically requested remain confidential—confirming that Apple gets a 36 percent cut of search ad revenue from its Safari deal with Google.";
+		$feedback = 'Actually, I was looking for some other methodology. Nothing wrong with the book, may be I could not understand exactly what I wanted.';
 
 		try {
-			$response = $this->geniza->analyzeProductFeedback($textBlock);
+			$response = $this->geniza->analyzeProductFeedback($feedback);
 		} catch (ResponseException $e) {
 			echo "Connection issue: {$e->getMessage()}\n";
 			echo "Response Code: {$e->getCode()}\n";
@@ -38,11 +40,10 @@ final class AnalyzerTest extends BaseTestCase {
 			$this->fail('Request Failed');
 		}
 
-		$this->assertNotEmpty($response->language);
+		$this->assertNotEmpty($response->feedback);
 
-		$this->assertSame('en', $response->language->code);
-		$this->assertSame('English', $response->language->name);
-		$this->assertSame('English', $response->language->localName);
+		$this->assertSame('neutral', $response->feedback->classification);
+		$this->assertSame(73, $response->feedback->confidence);
 
 		$this->assertSame(45, strlen((string) $response->uuid), $response->uuid);
 		$this->assertIsString($response->version);
@@ -50,6 +51,32 @@ final class AnalyzerTest extends BaseTestCase {
 		$requestHistory = $this->rh->getRequestHistoryBodies();
 		$this->assertNotEmpty($requestHistory);
 
-		$this->assertSame('{"text":"Big Tech on Trial reporter Lee Hepner—who also serves as antitrust legal counsel for the nonprofit the American Economic Liberties Project—posted on X (formerly Twitter) to summarize Murphy\u0027s testimony as arguing, \u0022Google\u0027s Search monopoly is good for you, consumer choice is \u0027irrational,\u0027 and privacy is bad quality.\u0022\nOn the day prior, Murphy potentially bolstered the DOJ\u0027s case by accidentally leaking a key figure that both Google and Apple had specifically requested remain confidential—confirming that Apple gets a 36 percent cut of search ad revenue from its Safari deal with Google."}', $requestHistory[0]);
+		$this->assertSame('{"feedback":"Actually, I was looking for some other methodology. Nothing wrong with the book, may be I could not understand exactly what I wanted.","sandbox":true}', $requestHistory[$historyCount]);
+
+		// Test with title
+
+		$title = 'I really liked this book';
+
+		try {
+			$response = $this->geniza->analyzeProductFeedback($feedback, $title);
+		} catch (ResponseException $e) {
+			echo "Connection issue: {$e->getMessage()}\n";
+			echo "Response Code: {$e->getCode()}\n";
+			echo "Response Payload: {$e->responsePayload}\n";
+			$this->fail('Request Failed');
+		}
+
+		$this->assertNotEmpty($response->feedback);
+
+		$this->assertSame('positive', $response->feedback->classification);
+		$this->assertSame(61, $response->feedback->confidence);
+
+		$this->assertSame(45, strlen((string) $response->uuid), $response->uuid);
+		$this->assertIsString($response->version);
+
+		$requestHistory = $this->rh->getRequestHistoryBodies();
+		$this->assertNotEmpty($requestHistory);
+
+		$this->assertSame('{"feedback":"Title: I really liked this book\n\nActually, I was looking for some other methodology. Nothing wrong with the book, may be I could not understand exactly what I wanted.","sandbox":true}', $requestHistory[++$historyCount]);
 	}
 }
