@@ -21,6 +21,7 @@ final class ExtractorTest extends BaseTestCase {
 	 * Test Stock Symbol Extractor
 	 */
 	public function testStockSymbolExtraction(): void {
+		$historyCount = $this->rh->historyCount();
 		$this->mock->reset();
 		$this->mock->append(
 			new Response(201, ['Content-Type' => 'application/json'], '{"env":"testing","version":"0.1.2","messages":null,"uuid":"80fd58c78e782a7f950e10a713105e026557ea44d54fe","stockSymbols":[["Google","GOOGL"],["Apple","AAPL"]]}')
@@ -53,6 +54,6 @@ final class ExtractorTest extends BaseTestCase {
 		$requestHistory = $this->rh->getRequestHistoryBodies();
 		$this->assertNotEmpty($requestHistory);
 
-		$this->assertSame('{"text":"Big Tech on Trial reporter Lee Hepner—who also serves as antitrust legal counsel for the nonprofit the American Economic Liberties Project—posted on X (formerly Twitter) to summarize Murphy\u0027s testimony as arguing, \u0022Google\u0027s Search monopoly is good for you, consumer choice is \u0027irrational,\u0027 and privacy is bad quality.\u0022\nOn the day prior, Murphy potentially bolstered the DOJ\u0027s case by accidentally leaking a key figure that both Google and Apple had specifically requested remain confidential—confirming that Apple gets a 36 percent cut of search ad revenue from its Safari deal with Google."}', $requestHistory[0]);
+		$this->assertSame('{"text":"Big Tech on Trial reporter Lee Hepner—who also serves as antitrust legal counsel for the nonprofit the American Economic Liberties Project—posted on X (formerly Twitter) to summarize Murphy\u0027s testimony as arguing, \u0022Google\u0027s Search monopoly is good for you, consumer choice is \u0027irrational,\u0027 and privacy is bad quality.\u0022\nOn the day prior, Murphy potentially bolstered the DOJ\u0027s case by accidentally leaking a key figure that both Google and Apple had specifically requested remain confidential—confirming that Apple gets a 36 percent cut of search ad revenue from its Safari deal with Google.","sandbox":true}', $requestHistory[$historyCount]);
 	}
 }
