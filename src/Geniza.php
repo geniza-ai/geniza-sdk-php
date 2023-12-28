@@ -137,6 +137,20 @@ class Geniza {
 		return $response;
 	}
 
+	public function analyzeProductFeedback(string $text): Response {
+		$requestClient = new Client();
+		$url           = new Url('analyzers/ProductFeedback', Method::POST);
+		$payload       = new Payload(['text' => $text]);
+
+		try {
+			$response = $requestClient->request($url, $payload);
+		} catch (ResponseException|JsonException|Exception $e) {
+			throw new ResponseException('Error: ' . $e->getMessage(), $e->getCode(), $e->responsePayload ?? null);
+		}
+
+		return $response;
+	}
+
 	/**
 	 * Provide feedback on Geniza.ai Response
 	 *
