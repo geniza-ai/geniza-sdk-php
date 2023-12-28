@@ -22,6 +22,7 @@ final class SapientSquirrelTest extends BaseTestCase {
 	 * Test Sapient Squirrel and feedback Methods
 	 */
 	public function testSapientSquirrel(): void {
+		$historyCount = $this->rh->historyCount();
 		$this->mock->reset();
 		$this->mock->append(
 			new Response(201, ['Content-Type' => 'application/json'], '{"env":"testing","uuid":"80fd58c78e782a7f950e10a713105e026557ea44d54fe","version":"1.0.1","answer":"You may rely on it"}'),
@@ -66,7 +67,7 @@ final class SapientSquirrelTest extends BaseTestCase {
 
 		$requestHistory = $this->rh->getRequestHistoryBodies();
 
-		$this->assertSame('{"question":"Will I go to the ball this evening?","sandbox":true}', $requestHistory[0]);
-		$this->assertSame('{"uuid":"80fd58c78e782a7f950e10a713105e026557ea44d54fe","rating":0.9,"feedback":"This is test feedback","sandbox":true}', $requestHistory[1]);
+		$this->assertSame('{"question":"Will I go to the ball this evening?","sandbox":true}', $requestHistory[$historyCount]);
+		$this->assertSame('{"uuid":"80fd58c78e782a7f950e10a713105e026557ea44d54fe","rating":0.9,"feedback":"This is test feedback","sandbox":true}', $requestHistory[$historyCount + 1]);
 	}
 }
