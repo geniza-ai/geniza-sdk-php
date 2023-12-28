@@ -71,7 +71,6 @@ class Payload implements JsonSerializable {
 			/** @var Config $config */
 			$config = Config::getInstance();
 
-			/** @psalm-readonly $config->isSandbox */
 			$this->properties['sandbox'] = $config->isSandbox;
 		}
 
