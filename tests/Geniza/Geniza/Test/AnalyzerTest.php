@@ -2,13 +2,18 @@
 declare(strict_types=1);
 namespace Geniza\Geniza\Test;
 
+use Geniza\Geniza;
 use Geniza\Request\ResponseException;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversFunction;
 use Tests\Support\BaseTestCase;
 
 /**
  * @internal
  */
+#[CoversClass(Geniza::class)]
+#[CoversFunction('analyzeProductFeedback')]
 final class AnalyzerTest extends BaseTestCase {
 	/**
 	 * Setup test case
