@@ -33,6 +33,8 @@ use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 use Rector\PHPUnit\AnnotationsToAttributes\Rector\Class_\AnnotationWithValueToAttributeRector;
+use Rector\PHPUnit\AnnotationsToAttributes\Rector\Class_\CoversAnnotationWithValueToAttributeRector;
+use Rector\PHPUnit\CodeQuality\Rector\Class_\TestWithToDataProviderRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
@@ -86,6 +88,8 @@ return static function (RectorConfig $rectorConfig): void {
 		// Note: requires php 8
 		RemoveUnusedPromotedPropertyRector::class,
 		AnnotationWithValueToAttributeRector::class,
+		CoversAnnotationWithValueToAttributeRector::class,
+		TestWithToDataProviderRector::class,
 		ClassPropertyAssignToConstructorPromotionRector::class,
 
 		// May load view files directly when detecting classes
