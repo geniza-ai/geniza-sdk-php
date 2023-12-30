@@ -13,7 +13,7 @@ class Config extends BaseConfig {
 	/**
 	 * SDK Version number
 	 */
-	public string $version = '0.3.1';
+	public string $version = '0.4.0';
 
 	/**
 	 * Sandbox mode
