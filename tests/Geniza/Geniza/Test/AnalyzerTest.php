@@ -23,7 +23,7 @@ final class AnalyzerTest extends BaseTestCase {
 	}
 
 	/**
-	 * Test Language Detector
+	 * Test analyzeProductFeedback
 	 */
 	public function testProductFeedbackAnalyzer(): void {
 		$historyCount = $this->rh->historyCount();
