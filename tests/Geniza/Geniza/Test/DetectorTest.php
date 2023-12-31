@@ -37,7 +37,7 @@ final class DetectorTest extends BaseTestCase {
 		$textBlock = "Big Tech on Trial reporter Lee Hepner—who also serves as antitrust legal counsel for the nonprofit the American Economic Liberties Project—posted on X (formerly Twitter) to summarize Murphy's testimony as arguing, \"Google's Search monopoly is good for you, consumer choice is 'irrational,' and privacy is bad quality.\"\nOn the day prior, Murphy potentially bolstered the DOJ's case by accidentally leaking a key figure that both Google and Apple had specifically requested remain confidential—confirming that Apple gets a 36 percent cut of search ad revenue from its Safari deal with Google.";
 
 		try {
-			$response = $this->geniza->extractStockSymbols($textBlock);
+			$response = $this->geniza->detectLanguage($textBlock);
 		} catch (ResponseException $e) {
 			echo "Connection issue: {$e->getMessage()}\n";
 			echo "Response Code: {$e->getCode()}\n";
@@ -84,7 +84,7 @@ final class DetectorTest extends BaseTestCase {
 			Bank Account x-1234";
 
 		try {
-			$response = $this->geniza->extractStockSymbols($textBlock);
+			$response = $this->geniza->detectPii($textBlock);
 		} catch (ResponseException $e) {
 			echo "Connection issue: {$e->getMessage()}\n";
 			echo "Response Code: {$e->getCode()}\n";

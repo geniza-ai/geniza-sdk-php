@@ -138,6 +138,36 @@ class Geniza {
 	}
 
 	/**
+	 * Message Summarizer
+	 *
+	 * @param string $message   The message to summarize
+	 * @param ?int   $wordCount The desired length of the summary. Note: setting this does not guarantee the summary
+	 *                          will be less than $wordCount. [default: 150]
+	 *
+	 * @throws ResponseException
+	 */
+	public function messageSummarizer(string $message, ?int $wordCount = null): Response {
+		$requestClient = new Client();
+		$url           = new Url('summarizers/messageSummary', Method::POST);
+		$raw_payload   = ['message' => $message];
+
+		// Only set/pass wordCount if present
+		if ($wordCount !== null) {
+			$raw_payload['wordCount'] = $wordCount;
+		}
+
+		$payload = new Payload($raw_payload);
+
+		try {
+			$response = $requestClient->request($url, $payload);
+		} catch (ResponseException|JsonException|Exception $e) {
+			throw new ResponseException('Error: ' . $e->getMessage(), $e->getCode(), $e->responsePayload ?? null);
+		}
+
+		return $response;
+	}
+
+	/**
 	 * Provide feedback on Geniza.ai Response
 	 *
 	 * @param string  $uuid               Unique Request ID
