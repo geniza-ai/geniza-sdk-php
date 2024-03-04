@@ -30,7 +30,7 @@
     "phpstan/phpstan-strict-rules": "*",
     "sebastian/phpcpd": "*",
     "vimeo/psalm": "*",
-    "rector/rector": "0.18.13"
+    "rector/rector": "1.0.2"
   },
   "suggest": {
     "ext-curl": "Helpful in interacting with Geniza.ai API servers.",
